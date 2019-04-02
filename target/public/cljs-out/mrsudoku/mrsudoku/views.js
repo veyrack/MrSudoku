@@ -9,9 +9,9 @@ mrsudoku.views.cellv_value = (function mrsudoku$views$cellv_value(cv){
 return cv.target.value;
 });
 mrsudoku.views.cell_view = (function mrsudoku$views$cell_view(cell,block_index,cell_col,cell_row,cell_conflicts){
-var classes = cljs.core.conj.call(null,new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, ["cellview",["block-",cljs.core.str.cljs$core$IFn$_invoke$arity$1(block_index)].join(''),["col-",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cell_col)].join(''),["row-",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cell_row)].join('')], null),(function (){var G__15457 = new cljs.core.Keyword(null,"status","status",-1997798413).cljs$core$IFn$_invoke$arity$1(cell);
-var G__15457__$1 = (((G__15457 instanceof cljs.core.Keyword))?G__15457.fqn:null);
-switch (G__15457__$1) {
+var classes = cljs.core.conj.call(null,new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, ["cellview",["block-",cljs.core.str.cljs$core$IFn$_invoke$arity$1(block_index)].join(''),["col-",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cell_col)].join(''),["row-",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cell_row)].join('')], null),(function (){var G__17316 = new cljs.core.Keyword(null,"status","status",-1997798413).cljs$core$IFn$_invoke$arity$1(cell);
+var G__17316__$1 = (((G__17316 instanceof cljs.core.Keyword))?G__17316.fqn:null);
+switch (G__17316__$1) {
 case "init":
 return "init-cell";
 
@@ -31,9 +31,9 @@ return "unknown-cell";
 })());
 var classes_SINGLEQUOTE_ = (((cell_conflicts == null))?classes:cljs.core.conj.call(null,classes,"conflict-cell"));
 var cell_classes = new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),clojure.string.join.call(null," ",classes_SINGLEQUOTE_)], null);
-var G__15458 = new cljs.core.Keyword(null,"status","status",-1997798413).cljs$core$IFn$_invoke$arity$1(cell);
-var G__15458__$1 = (((G__15458 instanceof cljs.core.Keyword))?G__15458.fqn:null);
-switch (G__15458__$1) {
+var G__17317 = new cljs.core.Keyword(null,"status","status",-1997798413).cljs$core$IFn$_invoke$arity$1(cell);
+var G__17317__$1 = (((G__17317 instanceof cljs.core.Keyword))?G__17317.fqn:null);
+switch (G__17317__$1) {
 case "init":
 return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),cell_classes,[cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"value","value",305978217).cljs$core$IFn$_invoke$arity$1(cell))].join('')], null);
 
@@ -41,10 +41,10 @@ break;
 case "empty":
 case "set":
 case "conflict":
-return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),cell_classes,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"input","input",556931961),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"type","type",1174270348),"number",new cljs.core.Keyword(null,"min","min",444991522),"1",new cljs.core.Keyword(null,"max","max",61366548),"9",new cljs.core.Keyword(null,"value","value",305978217),[cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"value","value",305978217).cljs$core$IFn$_invoke$arity$1(cell))].join(''),new cljs.core.Keyword(null,"on-change","on-change",-732046149),((function (G__15458,G__15458__$1,classes,classes_SINGLEQUOTE_,cell_classes){
-return (function (p1__15456_SHARP_){
-return re_frame.core.dispatch.call(null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"cell-value-changed","cell-value-changed",-452878054),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.views.cellv_value.call(null,p1__15456_SHARP_),cell_col,cell_row], null)], null));
-});})(G__15458,G__15458__$1,classes,classes_SINGLEQUOTE_,cell_classes))
+return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),cell_classes,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"input","input",556931961),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"type","type",1174270348),"number",new cljs.core.Keyword(null,"min","min",444991522),"1",new cljs.core.Keyword(null,"max","max",61366548),"9",new cljs.core.Keyword(null,"value","value",305978217),[cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"value","value",305978217).cljs$core$IFn$_invoke$arity$1(cell))].join(''),new cljs.core.Keyword(null,"on-change","on-change",-732046149),((function (G__17317,G__17317__$1,classes,classes_SINGLEQUOTE_,cell_classes){
+return (function (p1__17315_SHARP_){
+return re_frame.core.dispatch.call(null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"cell-value-changed","cell-value-changed",-452878054),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.views.cellv_value.call(null,p1__17315_SHARP_),cell_col,cell_row], null)], null));
+});})(G__17317,G__17317__$1,classes,classes_SINGLEQUOTE_,cell_classes))
 ], null)], null)], null);
 
 break;
@@ -71,10 +71,10 @@ if((b <= (9))){
 var mmodel = cljs.core.deref.call(null,model);
 var grid = new cljs.core.Keyword(null,"grid","grid",402978600).cljs$core$IFn$_invoke$arity$1(mmodel);
 var conflicts = new cljs.core.Keyword(null,"conflicts","conflicts",-1219561816).cljs$core$IFn$_invoke$arity$1(mmodel);
-var G__15461 = (b + (1));
-var G__15462 = cljs.core.conj.call(null,bviews,mrsudoku.views.block_view.call(null,grid,conflicts,b));
-b = G__15461;
-bviews = G__15462;
+var G__17320 = (b + (1));
+var G__17321 = cljs.core.conj.call(null,bviews,mrsudoku.views.block_view.call(null,grid,conflicts,b));
+b = G__17320;
+bviews = G__17321;
 continue;
 } else {
 return bviews;

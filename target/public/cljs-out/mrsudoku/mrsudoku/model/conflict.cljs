@@ -40,8 +40,7 @@
         (conj #{} kind1 kind2)))))
 
 (defn merge-conflict [conflict1 conflict2]
-  ;; Attention : réponse fausse
-  conflict1)
+  (merge conflict1 conflict2))
 
 (defn merge-conflicts [& conflicts]
   (apply (partial merge-with merge-conflict) conflicts))
@@ -97,10 +96,6 @@
         (let [end (filter (fn [x] (= (get (second x) :status) :set)) res)]
           (conversion end cy))))))
 
-
-          ;((map (fn [x] (assoc end (first x) (assoc (g/mk-cell :conflict cy) :kind :row))) end)))))))
-
-
 (defn row-conflicts
   "Returns a map of conflicts in a `row`."
   [row cy]
@@ -113,8 +108,8 @@
 (defn rows-conflicts
   "Returns a map of conflicts in all rows of `grid`"
   [grid]
-  ;; Attention : réponse fausse
-  {})
+  (reduce merge-conflicts {}
+                 (map (fn [c] (row-conflicts (g/row grid c) c)) (range 1 10))))
 
 (defn block-conflicts
   [block b]
