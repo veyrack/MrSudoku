@@ -78,17 +78,37 @@
 
 
 
-(defn row-conflicts
+(defn conversion [n cy]
+      (loop [s n,res {}]
+        (if (seq s)
+          (recur (rest s) (assoc res (first (first s)) (assoc (g/mk-cell :conflict cy) :kind :row)))
+          res)))
+
+(defn find-conflicts
   "Returns a map of conflicts in a `row`."
-  [row cy]
+  [row cy ligne]
   (loop [cpt 1, res {}, s row]
     (if (seq s)
       (if (= cy (get (first s) :value))
-        (recur (inc cpt) (assoc res (vector cpt cy) (assoc (g/mk-cell :conflict cy) :kind :row)) (rest s))
+        (recur (inc cpt) (assoc res (vector cpt ligne) (first s)) (rest s))
         (recur (inc cpt) res (rest s)))
       (if (= 1 (count res))
         {}
-        res))))
+        (let [end (filter (fn [x] (= (get (second x) :status) :set)) res)]
+          (conversion end cy))))))
+
+
+          ;((map (fn [x] (assoc end (first x) (assoc (g/mk-cell :conflict cy) :kind :row))) end)))))))
+
+
+(defn row-conflicts
+  "Returns a map of conflicts in a `row`."
+  [row cy]
+  (let [map (values row)]
+    (loop [s map,res {}]
+      (if (seq s)
+        (recur (rest s) (merge res (find-conflicts row (first s) cy)))
+        (merge res {})))))
 
 (defn rows-conflicts
   "Returns a map of conflicts in all rows of `grid`"
