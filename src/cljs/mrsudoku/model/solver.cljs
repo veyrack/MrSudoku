@@ -13,6 +13,46 @@
 (def biparti {:x1 #{1 4 43}
               :x2 #{1}
               :x3 #{4}})
+(def domaines {:a #{1,3}
+               :b #{1,2,3}})
+
+(def constraint [{:var1 :b
+                  :var2 :a
+                  :check not=}])
+
+
+(declare all-singleton?)
+(declare build-solution)
+(declare solution?)
+(declare select-var)
+(declare find-solution)
+(declare add-vect)
+(declare transpose)
+(declare adding)
+(declare completing)
+(declare add-edge)
+(declare augment)
+(declare inv-edges)
+(declare merge-edges)
+(declare sinks)
+(declare dfs)
+(declare dfs-post)
+(declare complete-matching?)
+(declare dfs-stack)
+(declare compute-scc)
+(declare doms-from-sccomp)
+(declare doms-from-scc)
+(declare isolated-values)
+(declare value-known-by)
+(declare add-value)
+(declare vars-of)
+(declare access)
+(declare max-matching)
+(declare complete-matching?)
+(declare add-vertex)
+(declare remove-edge)
+(declare graph-with-matching)
+(declare alldiff)
 
 (defn solve
   "Solve the sudoku `grid` by returing a full solved grid,
@@ -22,13 +62,17 @@
   nil)
 
 
-(defn all-singleton? [doms]
+(defn all-singleton?
+  "Verifie si toute les clefs du domaine ont une seule valeur"
+  [doms]
   (every? #(= (count %) 1) (vals doms)))
 
-(defn build-solution [doms]
-  (into {} (map (fn [[x xdom] doms [x (first xdom)]]))))
+;(defn build-solution [doms])
+  ;(into {} (map (fn [[x xdom] doms [x (first xdom)]]))))
 
-(defn solution? [constraints sol]
+(defn solution?
+  "Verifie si sol est une solution selon les contraintes"
+  [constraints sol]
   (loop [cs constraints]
     (if (seq cs)
       (let [constraint (first cs)]
@@ -37,12 +81,16 @@
           false))
       true)))
 
-(defn select-var [doms]
+(defn select-var
+  "Selectionne dans doms le premier element qui n'est pas un singleton"
+  [doms]
   (some (fn [[x xdom]] (if (> (count xdom) 1)
                           x
                           nil)) doms))
 
-(defn find-solution [constraints doms]
+(defn find-solution
+  "Cherche une solution dans doms selon les contraintes"
+  [constraints doms]
   (if (all-singleton? doms)
     (let [sol (build-solution doms)]
       (if (solution? constraints sol)
@@ -55,14 +103,20 @@
                   sol
                   (recur (rest xval))))
              nil)))))))
-(defn add-vect [graph vect val]
+
+
+(defn add-vect
+  "Ajoute au graphe une liaison entre vect(sommet) et la valeur donnée"
+  [graph vect val]
   (if (contains? graph vect)
     (assoc graph vect (conj (get graph vect) val))
     (if (nil? val)
       (assoc graph vect #{})
       (assoc graph vect #{val}))))
 
-(defn transpose [graph]
+(defn transpose
+  "Inverse les liaisons du graphe"
+  [graph]
   (loop [keys (keys graph),values (vals graph),res {}]
 ;    (println keys)
 ;    (println values)
@@ -73,13 +127,17 @@
         (recur (rest keys) (rest values) (adding res (first keys) (first values))))
       (completing res graph))))
 
-(defn adding [graph key vals]
+(defn adding
+  "Ajoute dans le gaphe une valeur à un ensemble de sommet(vals)"
+  [graph key vals]
   (loop [res graph,s vals]
     (if (seq s)
       (recur (add-vect res (first s) key) (rest s))
       res)))
 
-(defn completing [res graph]
+(defn completing
+  "S'il manque des sommets au graphe, la fonction les ajoute"
+  [res graph]
   (loop [res res, s (keys graph)]
     (if (seq s)
       (if (contains? res (first s))
@@ -87,13 +145,15 @@
         (recur (add-vect res (first s) nil) (rest s)))
       res)))
 
-(defn add-edge [graph src dest]
-  (assoc graph src (conj (get graph src) dest)))
+;(defn add-edge [graph src dest]
+;  (assoc graph src (conj (get graph src) dest)))
 
-(defn augment [graph src visited match]
+(defn augment
+  "Lie une sommet à une valeur unique, ou vole la valeur d'un autre sommet"
+  [graph src visited match]
   (loop [dests (get graph src),visited visited]
     (if (seq dests)
-      (if (and (> (count dests) 1) (visited (first dests)))
+      (if (visited (first dests))
         (recur (rest dests) visited)
         (if-let [old-src (get match (first dests))]
           (let [[found, visited',match'] (augment graph old-src (conj visited (first dests)) match)]
@@ -104,10 +164,14 @@
      [false,visited,match])))
 
 
-(defn inv-edges [src dests]
+(defn inv-edges
+  ""
+  [src dests]
   (zipmap dests (repeat #{src})))
 
-(defn merge-edges [edge1 edge2]
+(defn merge-edges
+  ""
+  [edge1 edge2]
   (loop [s edge2,m edge1]
     (if (seq s)
       (let [[k,n2] (first s)]
@@ -116,7 +180,10 @@
           (recur (rest s) (assoc m k n2))))
       m)))
 
-(defn sinks [graph verts]
+
+(defn sinks
+  ""
+  [graph verts]
   (reduce (fn [ngraph vert]
             (if (contains? ngraph vert)
               ngraph
@@ -124,7 +191,9 @@
           graph
           verts))
 
-(defn dfs [grpah vert f init visited]
+(defn dfs
+  "Parcours en Profondeur (prefixe)"
+  [graph vert f init visited]
   (if (visited vert)
     [init visited]
     (loop [verts (get graph vert), res (f init vert), visited (conj visited vert)]
@@ -133,7 +202,9 @@
           (recur (rest verts) res' visited'))
         [res visited]))))
 
-(defn dfs-post [grpah vert f init visited]
+(defn dfs-post
+  "Parcours en Profondeur (postfixe)"
+  [graph vert f init visited]
   (if (visited vert)
     [init visited]
     (loop [verts (get graph vert), res init,visited (conj visited vert)]
@@ -145,14 +216,18 @@
 (defn complete-matching? [vars match]
   (= (count vars) (count match)))
 
-(defn dfs-stack [graph]
+(defn dfs-stack
+  "Parcours en Profondeur (pile)"
+  [graph]
   (loop [verts (keys graph),stack (),visited #{}]
     (if (seq verts)
       (let [[stack',visited'] (dfs-post graph (first verts) conj stack visited)]
         (recur (rest verts) stack' visited'))
       stack)))
 
-(defn compute-scc [graph]
+(defn compute-scc
+  "Composants fortements connexes du graphe"
+  [graph]
   (let [stack (dfs-stack graph), tgraph (transpose graph)]
     (loop [s stack,visited #{},res []]
       (if (seq s)
@@ -168,7 +243,7 @@
    :v2 #{1 2 4 5}
    :v3 #{4 5 6}
    :v4 #{4 5 6}
-   :v5 #{4 5 6}}
+   :v5 #{4 5 6}})
 
 
 (max-matching alldiff-doms)->{1 :v2
@@ -177,18 +252,19 @@
                               6 :v4
                               5 :v3}
 
-
 (defn doms-from-sccomp [variables compp]
   (if (= (count compp) 1)
      (if (contains? variables (first compp))
       {(first compp) #{}}
       {})
-     (let [vars (clojure.set/select #(contains? %) compp)
+     (let [vars (clojure.set/select #(contains? variables %) compp)
            values (clojure.set/difference compp vars)]
       (zipmap vars (repeat values)))))
 
+(doms-from-scc (vars-of alldiff-doms) [#{3} #{:v1} #{1} #{:v2} #{2} #{:v5 4 6 :v4 :v3 5}])
+
 (defn doms-from-scc [vars scc]
-  (reduce (fn [res comp] (comp res (doms-from-sccomp vars comp))) {} scc))
+  (reduce (fn [res comp] (conj res (doms-from-sccomp vars comp))) {} scc))
 
 (group-by #(contains? variables %) comp)
 ->{true #{:v3 :v4 :v5}
@@ -222,13 +298,20 @@
         isolated (isolated-values (vars-of doms) scc)]
     (reduce (fn [doms' value] (add-value doms' (value-known-by doms value) value)) sccdoms isolated)))
 
+(vars-of biparti)
+(doms-from-scc (vars-of alldiff-doms) (compute-scc (graph-with-matching alldiff-doms (max-matching alldiff-doms))))
+(access biparti (compute-scc (graph-with-matching biparti (max-matching biparti))))
+(access alldiff-doms (compute-scc (graph-with-matching alldiff-doms (max-matching alldiff-doms))))
+
 (defn max-matching [doms]
-  (loop [res {},keys (keys doms),visited #{}]
-    (if (seq keys)
-      (let [[rep,visited',match] (augment doms (first keys) visited res)]
-        (println rep visited' match)
-        (recur match (rest keys) visited'))
-      res)))
+  (reduce (fn [m node] (nth (augment doms node #{} m) 2)) {} (keys doms)))
+  ;(loop [res {},keys (keys doms),visited #{}]
+  ;  (if (seq keys)
+  ;    (let [[rep,visited',match] (augment doms (first keys) visited res)]
+  ;      ;(println rep visited' match)
+  ;     (recur match (rest keys) visited'))
+  ;  res)))
+
 
 (defn complete-matching? [vars match]
   (= (count vars) (count match)))
@@ -256,9 +339,16 @@
 (defn graph-with-matching [graph match]
   (reduce (fn [mgraph [src dest]]
             (-> mgraph
+              ;(println src dest)
               (add-vertex src)
               (add-edge src dest)
-              (remove-edge dest src))) graph match))
+              (remove-edge dest src)))
+
+          graph match))
+
+(compute-scc (graph-with-matching alldiff-doms (max-matching alldiff-doms)))
+
+(alldiff alldiff-doms)
 
 (defn alldiff
   "simplify the doms for the all-different constraint,return nil if not satisfiable"
@@ -266,6 +356,6 @@
   (let [match (max-matching doms)]
        (if (complete-matching? doms match)
          (let [scc (compute-scc (graph-with-matching doms match))]
-           (println scc)
+           ;(println scc)
            (access doms scc))
          nil)))

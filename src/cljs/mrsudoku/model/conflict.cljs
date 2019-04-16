@@ -40,7 +40,7 @@
         (conj #{} kind1 kind2)))))
 
 (defn merge-conflict [conflict1 conflict2]
-  (merge conflict1 conflict2))
+  (merge-conflict-kind (get conflict1 :kind) (get conflict2 :kind)))
 
 (defn merge-conflicts [& conflicts]
   (apply (partial merge-with merge-conflict) conflicts))
