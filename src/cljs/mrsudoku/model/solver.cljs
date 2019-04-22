@@ -67,8 +67,12 @@
   [doms]
   (every? #(= (count %) 1) (vals doms)))
 
-;(defn build-solution [doms])
-  ;(into {} (map (fn [[x xdom] doms [x (first xdom)]]))))
+
+(defn build-solution
+  "Construit une solution en choissisant les premiers elements de chaque domaine"
+  [domaine]
+  (into {} (map (fn [[x xdom]] [x (first xdom)]) domaine)))
+
 
 (defn solution?
   "Verifie si sol est une solution selon les contraintes"
@@ -88,21 +92,38 @@
                           x
                           nil)) doms))
 
+;(defn find-solution
+;  "Cherche une solution dans doms selon les contraintes"
+;  [constraints doms]
+;  (if (all-singleton? doms)
+;    (let [sol (build-solution doms)]
+;      (if (solution? constraints sol)
+;        sol
+;        (let [x (select-var doms)]
+;          (loop [xval (get doms x)]
+;            (if (seq xval)
+;              (let [sol (find-solution constraints (assoc doms x #{(first xval)}))]
+;                (if sol
+;                  sol
+;                  (recur (rest xval))))
+;             nil)))))))
+
 (defn find-solution
-  "Cherche une solution dans doms selon les contraintes"
-  [constraints doms]
-  (if (all-singleton? doms)
-    (let [sol (build-solution doms)]
-      (if (solution? constraints sol)
-        sol
+      "Cherche une solution dans doms selon les contraintes"
+      [constraints doms]
+      (if (all-singleton? doms)
+        (let [sol (build-solution doms)]
+          (if (solution? constraints sol)
+            sol
+            nil))
         (let [x (select-var doms)]
-          (loop [xval (get doms x)]
-            (if (seq xval)
-              (let [sol (find-solution constraints (assoc doms x #{(first xval)}))]
-                (if sol
-                  sol
-                  (recur (rest xval))))
-             nil)))))))
+            (loop [xval (get doms x)]
+              (if (seq xval)
+                (let [sol (find-solution constraints (assoc doms x #{(first xval)}))]
+                  (if sol
+                    sol
+                    (recur (rest xval))))
+                nil)))))
 
 
 (defn add-vect
