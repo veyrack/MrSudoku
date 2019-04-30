@@ -1,5 +1,6 @@
-(ns mrsudoku.model.solver
-  (:require [mrsudoku.model.grid :as g]))
+(ns mrsudoku.model.solver)
+
+(require '[mrsudoku.model.grid :as g])
 
 (def graph {:A #{:F :B :C},
             :B #{:C}
@@ -30,6 +31,7 @@
 (declare add-vect)
 (declare transpose)
 (declare adding)
+(declare completing)
 (declare add-edge)
 (declare augment)
 (declare inv-edges)
@@ -48,13 +50,11 @@
 (declare vars-of)
 (declare access)
 (declare max-matching)
+(declare complete-matching?)
 (declare add-vertex)
 (declare remove-edge)
 (declare graph-with-matching)
 (declare alldiff)
-(declare solution)
-(declare values)
-(declare completin)
 
 (defn solve
   "Solve the sudoku `grid` by returing a full solved grid,
@@ -127,15 +127,6 @@
     (if (seq s)
       (recur (add-vect res (first s) key) (rest s))
       res)))
-(defn completin
-  "S'il manque des sommets au graphe, la fonction les ajoute"
-  [res graph]
-  (loop [res res, s (keys graph)]
-    (if (seq s)
-      (if (contains? res (first s))
-        (recur res (rest s))
-        (recur (add-vect res (first s) nil) (rest s)))
-      res)))
 
 (defn transpose
   "Inverse les liaisons du graphe"
@@ -148,7 +139,19 @@
       (if (= #{} (first values))
         (recur (rest keys) (rest values) res)
         (recur (rest keys) (rest values) (adding res (first keys) (first values))))
-      (completin res graph))))
+      (completing res graph))))
+
+
+
+(defn completing
+  "S'il manque des sommets au graphe, la fonction les ajoute"
+  [res graph]
+  (loop [res res, s (keys graph)]
+    (if (seq s)
+      (if (contains? res (first s))
+        (recur res (rest s))
+        (recur (add-vect res (first s) nil) (rest s)))
+      res)))
 
 ;(defn add-edge [graph src dest]
 ;  (assoc graph src (conj (get graph src) dest)))
@@ -310,6 +313,9 @@
   ;  res)))
 
 
+(defn complete-matching? [vars match]
+  (= (count vars) (count match)))
+
 (defn add-vertex
   "Adds an unlinked vertex to the graph.
   Does nothing if already present"
@@ -340,7 +346,6 @@
 
           graph match))
 
-
 ;(compute-scc (graph-with-matching alldiff-doms (max-matching alldiff-doms)))
 
 ;(alldiff alldiff-doms)
@@ -356,11 +361,6 @@
          nil)))
 
 ;;FONCTIONS RAJOUTEE_________________________________________________________________________________________
-(defn values
-  "Return the set of values of a vector or grid `cells`."
-  [cells]
-  (into #{} (map (fn [x] (get x :value)) (filter (fn [x] (get x :value)) cells))))
-
 
 (defn which-bloc
   ([b]
@@ -382,9 +382,9 @@
 
 (defn cell-dom [grid coll ligne bloc]
   "Retourne le domaine de la cellule en eliminant les valeurs de la colonne, ligne et block"
-  (if-let [res (g/cell-value (g/cell grid coll ligne))]
+  (if-let [res (cell-value (cell grid coll ligne))]
     (conj #{} res)
-    (let [d (reduce (fn [res add] (conj res add)) (values (g/row grid ligne)) (values (g/col grid coll))), delete (reduce (fn [res add] (conj res add)) d (values (g/block grid bloc)))]
+    (let [d (reduce (fn [res add] (conj res add)) (values (row grid ligne)) (values (col grid coll))), delete (reduce (fn [res add] (conj res add)) d (values (block grid bloc)))]
      (clojure.set/difference #{1 2 3 4 5 6 7 8 9} delete))))
 
 (defn rows-doms [grid row]
@@ -436,19 +436,19 @@
   ([grid] (solution grid 1 1))
   ([grid ligne col] (solution grid ligne col (grid-dom grid)))
   ([grid ligne col doms]
-   ;(println ligne " " col)
+   (println ligne " " col)
    (if (and (< ligne 10) (< col 10))
      (let [cas (keyword (str "v" ligne col)), dom (get doms cas)]
-       (if (= :init (get (g/cell grid col ligne) :status))
+       (if (= :init (get (cell grid col ligne) :status))
          (if (= col 9)
            (solution grid (inc ligne) 1)
            (solution grid ligne (inc col)))
          ;else: case non initiale
          (loop [dom dom]
-           ;(println dom)
+           (println dom)
            (if (seq dom)
              (if (and (and (alldiff (rows-doms grid ligne)) (alldiff (cols-doms grid col))) (alldiff (bloc-doms grid (which-bloc ligne col))))
-               (let [newgrid (g/change-cell grid col ligne (g/mk-cell :set (first dom)))]
+               (let [newgrid (change-cell grid col ligne (mk-cell :set (first dom)))]
                  (if (= col 9)
                    (let [[rep ngrid] (solution newgrid (inc ligne) 1)]
                      (if rep

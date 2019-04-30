@@ -4,8 +4,8 @@
    [re-frame.core :as re-frame]
    [mrsudoku.events :as events]
    [mrsudoku.views :as views]
-   [mrsudoku.config :as config]
-   ))
+   [mrsudoku.config :as config]))
+
 
 (defn dev-setup []
   (when config/debug?
