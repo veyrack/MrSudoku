@@ -46,14 +46,14 @@ return mrsudoku.model.conflict.merge_conflict_kind.call(null,cljs.core.get.call(
 });
 mrsudoku.model.conflict.merge_conflicts = (function mrsudoku$model$conflict$merge_conflicts(var_args){
 var args__4534__auto__ = [];
-var len__4531__auto___8543 = arguments.length;
-var i__4532__auto___8544 = (0);
+var len__4531__auto___8578 = arguments.length;
+var i__4532__auto___8579 = (0);
 while(true){
-if((i__4532__auto___8544 < len__4531__auto___8543)){
-args__4534__auto__.push((arguments[i__4532__auto___8544]));
+if((i__4532__auto___8579 < len__4531__auto___8578)){
+args__4534__auto__.push((arguments[i__4532__auto___8579]));
 
-var G__8545 = (i__4532__auto___8544 + (1));
-i__4532__auto___8544 = G__8545;
+var G__8580 = (i__4532__auto___8579 + (1));
+i__4532__auto___8579 = G__8580;
 continue;
 } else {
 }
@@ -71,9 +71,9 @@ return cljs.core.apply.call(null,cljs.core.partial.call(null,cljs.core.merge_wit
 mrsudoku.model.conflict.merge_conflicts.cljs$lang$maxFixedArity = (0);
 
 /** @this {Function} */
-mrsudoku.model.conflict.merge_conflicts.cljs$lang$applyTo = (function (seq8542){
+mrsudoku.model.conflict.merge_conflicts.cljs$lang$applyTo = (function (seq8577){
 var self__4519__auto__ = this;
-return self__4519__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq8542));
+return self__4519__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq8577));
 });
 
 mrsudoku.model.conflict.update_conflicts = (function mrsudoku$model$conflict$update_conflicts(conflict_kind,cx,cy,value,conflicts){
@@ -111,20 +111,20 @@ var cell = cljs.core.first.call(null,cells);
 var temp__5718__auto__ = mrsudoku.model.conflict.conflict_value.call(null,col,cy,cell);
 if(cljs.core.truth_(temp__5718__auto__)){
 var value = temp__5718__auto__;
-var G__8546 = (cy + (1));
-var G__8547 = cljs.core.rest.call(null,cells);
-var G__8548 = mrsudoku.model.conflict.update_conflicts.call(null,new cljs.core.Keyword(null,"col","col",-1959363084),cx,cy,value,conflicts);
-cy = G__8546;
-cells = G__8547;
-conflicts = G__8548;
+var G__8581 = (cy + (1));
+var G__8582 = cljs.core.rest.call(null,cells);
+var G__8583 = mrsudoku.model.conflict.update_conflicts.call(null,new cljs.core.Keyword(null,"col","col",-1959363084),cx,cy,value,conflicts);
+cy = G__8581;
+cells = G__8582;
+conflicts = G__8583;
 continue;
 } else {
-var G__8549 = (cy + (1));
-var G__8550 = cljs.core.rest.call(null,cells);
-var G__8551 = conflicts;
-cy = G__8549;
-cells = G__8550;
-conflicts = G__8551;
+var G__8584 = (cy + (1));
+var G__8585 = cljs.core.rest.call(null,cells);
+var G__8586 = conflicts;
+cy = G__8584;
+cells = G__8585;
+conflicts = G__8586;
 continue;
 }
 } else {
@@ -143,10 +143,10 @@ var s = n;
 var res = cljs.core.PersistentArrayMap.EMPTY;
 while(true){
 if(cljs.core.seq.call(null,s)){
-var G__8552 = cljs.core.rest.call(null,s);
-var G__8553 = cljs.core.assoc.call(null,res,cljs.core.first.call(null,cljs.core.first.call(null,s)),cljs.core.assoc.call(null,mrsudoku.model.grid.mk_cell.call(null,new cljs.core.Keyword(null,"conflict","conflict",1978796605),cy),new cljs.core.Keyword(null,"kind","kind",-717265803),new cljs.core.Keyword(null,"row","row",-570139521)));
-s = G__8552;
-res = G__8553;
+var G__8587 = cljs.core.rest.call(null,s);
+var G__8588 = cljs.core.assoc.call(null,res,cljs.core.first.call(null,cljs.core.first.call(null,s)),cljs.core.assoc.call(null,mrsudoku.model.grid.mk_cell.call(null,new cljs.core.Keyword(null,"conflict","conflict",1978796605),cy),new cljs.core.Keyword(null,"kind","kind",-717265803),new cljs.core.Keyword(null,"row","row",-570139521)));
+s = G__8587;
+res = G__8588;
 continue;
 } else {
 return res;
@@ -164,20 +164,20 @@ var s = row;
 while(true){
 if(cljs.core.seq.call(null,s)){
 if(cljs.core._EQ_.call(null,cy,cljs.core.get.call(null,cljs.core.first.call(null,s),new cljs.core.Keyword(null,"value","value",305978217)))){
-var G__8554 = (cpt + (1));
-var G__8555 = cljs.core.assoc.call(null,res,(new cljs.core.PersistentVector(null,2,(5),cljs.core.PersistentVector.EMPTY_NODE,[cpt,ligne],null)),cljs.core.first.call(null,s));
-var G__8556 = cljs.core.rest.call(null,s);
-cpt = G__8554;
-res = G__8555;
-s = G__8556;
+var G__8589 = (cpt + (1));
+var G__8590 = cljs.core.assoc.call(null,res,(new cljs.core.PersistentVector(null,2,(5),cljs.core.PersistentVector.EMPTY_NODE,[cpt,ligne],null)),cljs.core.first.call(null,s));
+var G__8591 = cljs.core.rest.call(null,s);
+cpt = G__8589;
+res = G__8590;
+s = G__8591;
 continue;
 } else {
-var G__8557 = (cpt + (1));
-var G__8558 = res;
-var G__8559 = cljs.core.rest.call(null,s);
-cpt = G__8557;
-res = G__8558;
-s = G__8559;
+var G__8592 = (cpt + (1));
+var G__8593 = res;
+var G__8594 = cljs.core.rest.call(null,s);
+cpt = G__8592;
+res = G__8593;
+s = G__8594;
 continue;
 }
 } else {
@@ -204,10 +204,10 @@ var s = map;
 var res = cljs.core.PersistentArrayMap.EMPTY;
 while(true){
 if(cljs.core.seq.call(null,s)){
-var G__8560 = cljs.core.rest.call(null,s);
-var G__8561 = cljs.core.merge.call(null,res,mrsudoku.model.conflict.find_conflicts.call(null,row,cljs.core.first.call(null,s),cy));
-s = G__8560;
-res = G__8561;
+var G__8595 = cljs.core.rest.call(null,s);
+var G__8596 = cljs.core.merge.call(null,res,mrsudoku.model.conflict.find_conflicts.call(null,row,cljs.core.first.call(null,s),cy));
+s = G__8595;
+res = G__8596;
 continue;
 } else {
 return cljs.core.merge.call(null,res,cljs.core.PersistentArrayMap.EMPTY);

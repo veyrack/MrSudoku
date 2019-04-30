@@ -96,7 +96,7 @@ with `cx` the column number and `cy` the row number."
   "Reduce the `b`-th `block` of a sudoku grid with a function taking 4
   parameters: `acc` for the accumulated value, `index` for the cell
   index in the block, `cx, cy` for the cell
-  coordinates in the grid and `cell` for the cell content."  
+  coordinates in the grid and `cell` for the cell content."
   [f init block b]
   (let [bx (* 3 (rem (- b 1) 3))
         by (* 3 (quot (- b 1) 3))]
@@ -184,5 +184,3 @@ with `cx` the column number and `cy` the row number."
   [f! grid]
   (reduce-grid (fn [_ cx cy cell]
                  (f! cx cy cell)) nil grid))
-
-

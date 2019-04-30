@@ -1,27 +1,6 @@
 (ns mrsudoku.model.solver
   (:require [mrsudoku.model.grid :as g]))
 
-(def graph {:A #{:F :B :C},
-            :B #{:C}
-            :C #{:D}
-            :D #{:E}
-            :E #{:C}
-            :F #{:H :G}
-            :G #{:H :I}
-            :H #{:F :I}
-            :I #{}})
-
-(def biparti {:x1 #{1 4 43}
-              :x2 #{1}
-              :x3 #{4}})
-(def domaines {:a #{1,3}
-               :b #{1,2,3}})
-
-(def constraint [{:var1 :b
-                  :var2 :a
-                  :check not=}])
-
-
 (declare all-singleton?)
 (declare build-solution)
 (declare solution?)
@@ -33,8 +12,6 @@
 (declare add-edge)
 (declare augment)
 (declare inv-edges)
-(declare merge-edges)
-(declare sinks)
 (declare dfs)
 (declare dfs-post)
 (declare complete-matching?)
@@ -63,54 +40,7 @@
   (second (solution grid)))
 
 
-(defn all-singleton?
-  "Verifie si toute les clefs du domaine ont une seule valeur"
-  [doms]
-  (every? #(= (count %) 1) (vals doms)))
-
-
-(defn build-solution
-  "Construit une solution en choissisant les premiers elements de chaque domaine"
-  [domaine]
-  (into {} (map (fn [[x xdom]] [x (first xdom)]) domaine)))
-
-
-(defn solution?
-  "Verifie si sol est une solution selon les contraintes"
-  [constraints sol]
-  (loop [cs constraints]
-    (if (seq cs)
-      (let [constraint (first cs)]
-        (if ((:check constraint) (get sol (:var1 constraint)) (get sol (:var2 constraint)))
-          (recur (rest cs))
-          false))
-      true)))
-
-(defn select-var
-  "Selectionne dans doms le premier element qui n'est pas un singleton"
-  [doms]
-  (some (fn [[x xdom]] (if (> (count xdom) 1)
-                          x
-                          nil)) doms))
-
-(defn find-solution
-      "Cherche une solution dans doms selon les contraintes"
-      [constraints doms]
-      (if (all-singleton? doms)
-        (let [sol (build-solution doms)]
-          (if (solution? constraints sol)
-            sol
-            nil))
-        (let [x (select-var doms)]
-            (loop [xval (get doms x)]
-              (if (seq xval)
-                (let [sol (find-solution constraints (assoc doms x #{(first xval)}))]
-                  (if sol
-                    sol
-                    (recur (rest xval))))
-                nil)))))
-
-
+;; Partie Graphe______________________________________________
 (defn add-vect
   "Ajoute au graphe une liaison entre vect(sommet) et la valeur donnée"
   [graph vect val]
@@ -127,6 +57,8 @@
     (if (seq s)
       (recur (add-vect res (first s) key) (rest s))
       res)))
+
+
 (defn completin
   "S'il manque des sommets au graphe, la fonction les ajoute"
   [res graph]
@@ -141,17 +73,12 @@
   "Inverse les liaisons du graphe"
   [graph]
   (loop [keys (keys graph),values (vals graph),res {}]
-;    (println keys)
-;    (println values)
-;    (println res)
     (if (seq keys)
       (if (= #{} (first values))
         (recur (rest keys) (rest values) res)
         (recur (rest keys) (rest values) (adding res (first keys) (first values))))
       (completin res graph))))
 
-;(defn add-edge [graph src dest]
-;  (assoc graph src (conj (get graph src) dest)))
 
 (defn augment
   "Lie une sommet à une valeur unique, ou vole la valeur d'un autre sommet"
@@ -170,31 +97,11 @@
 
 
 (defn inv-edges
-  ""
+  "Inverse les sommets"
   [src dests]
   (zipmap dests (repeat #{src})))
 
-(defn merge-edges
-  ""
-  [edge1 edge2]
-  (loop [s edge2,m edge1]
-    (if (seq s)
-      (let [[k,n2] (first s)]
-        (if-let [n1 (get m k)]
-          (recur (rest s) (assoc m k (clojure.set/union n1 n2)))
-          (recur (rest s) (assoc m k n2))))
-      m)))
 
-
-(defn sinks
-  ""
-  [graph verts]
-  (reduce (fn [ngraph vert]
-            (if (contains? ngraph vert)
-              ngraph
-              (assoc ngraph vert #{})))
-          graph
-          verts))
 
 (defn dfs
   "Parcours en Profondeur (prefixe)"
@@ -243,14 +150,6 @@
         res))))
 
 
-(def alldiff-doms
-  {:v1 #{1,2,3}
-   :v2 #{1 2 4 5}
-   :v3 #{4 5 6}
-   :v4 #{4 5 6}
-   :v5 #{4 5 6}})
-
-
 (defn doms-from-sccomp [variables compp]
   (if (= (count compp) 1)
      (if (contains? variables (first compp))
@@ -260,15 +159,14 @@
            values (clojure.set/difference compp vars)]
       (zipmap vars (repeat values)))))
 
-;(doms-from-scc (vars-of alldiff-doms) [#{3} #{:v1} #{1} #{:v2} #{2} #{:v5 4 6 :v4 :v3 5}])
 
 (defn doms-from-scc [vars scc]
   (reduce (fn [res comp] (conj res (doms-from-sccomp vars comp))) {} scc))
 
-;(group-by #(contains? variables %) comp)->{true #{:v3 :v4 :v5}   false #{4 5 6}))
 
 (defn isolated-values [variables scc]
   (into #{} (map first (filter #(and (= (count %) 1) (not (variables (first %)))) scc))))
+
 
 (defn value-known-by [doms value]
   (reduce (fn [res [v values]]
@@ -276,9 +174,11 @@
              (conj res v)
              res)) #{} doms))
 
+
 (defn add-value [doms vs value]
   (into doms (map (fn [var] [var,(conj (get doms var) value)]) vs)))
                ;[var, (update doms var #(conj % value))]
+
 
 (defn vars-of [doms]
   (loop [s doms,res #{}]
@@ -289,17 +189,22 @@
           (recur (rest s) res))
         res))))
 
+(defn sinks
+  "Ajoute dans le graphe les sommets inexistant"
+  [graph verts]
+  (reduce (fn [ngraph vert]
+            (if (contains? ngraph vert)
+              ngraph
+              (assoc ngraph vert #{})))
+          graph
+          verts))
 
 (defn access [doms scc]
   (let [sccdoms (doms-from-scc (vars-of doms) scc)
         isolated (isolated-values (vars-of doms) scc)]
-    (reduce (fn [doms' value] (add-value doms' (value-known-by doms value) value)) sccdoms isolated)))
+    (reduce (fn [doms' value] (add-value doms' (value-known-by doms value) value)) (sinks sccdoms (keys doms)) isolated)))
 
-;(vars-of biparti)
-;(doms-from-scc (vars-of alldiff-doms) (compute-scc (graph-with-matching alldiff-doms (max-matching alldiff-doms))))
-;(access biparti (compute-scc (graph-with-matching biparti (max-matching biparti))))
-;(access alldiff-doms (compute-scc (graph-with-matching alldiff-doms (max-matching alldiff-doms))))
-
+;
 (defn max-matching [doms]
   (reduce (fn [m node] (nth (augment doms node #{} m) 2)) {} (keys doms)))
   ;(loop [res {},keys (keys doms),visited #{}]
@@ -341,9 +246,6 @@
           graph match))
 
 
-;(compute-scc (graph-with-matching alldiff-doms (max-matching alldiff-doms)))
-
-;(alldiff alldiff-doms)
 
 (defn alldiff
   "simplify the doms for the all-different constraint,return nil if not satisfiable"
@@ -355,7 +257,7 @@
            (access doms scc))
          nil)))
 
-;;FONCTIONS RAJOUTEE_________________________________________________________________________________________
+;;Partie Grille-Solver_________________________________________________________________________________________
 (defn values
   "Return the set of values of a vector or grid `cells`."
   [cells]
@@ -422,9 +324,6 @@
         res))
     nil))
 
-;(bloc-doms sudoku-grid 1)
-;=>{:v21 #{6}, :v11 #{5}, :v32 #{9}, :v31 #{1 2}, :v33 #{8}, :v22 #{7 4 2}, :v13 #{1 4 2}, :v12 #{3}, :v23 #{7 4 2}}
-
 
 (defn grid-dom [grid]
   (loop [map {},cpt 1]
@@ -465,3 +364,50 @@
      [true grid])))
 
 ;______________________________________________________________________________________________________________________
+
+(defn all-singleton?
+  "Verifie si toute les clefs du domaine ont une seule valeur"
+  [doms]
+  (every? #(= (count %) 1) (vals doms)))
+
+
+(defn build-solution
+  "Construit une solution en choissisant les premiers elements de chaque domaine"
+  [domaine]
+  (into {} (map (fn [[x xdom]] [x (first xdom)]) domaine)))
+
+
+(defn solution?
+  "Verifie si sol est une solution selon les contraintes"
+  [constraints sol]
+  (loop [cs constraints]
+    (if (seq cs)
+      (let [constraint (first cs)]
+        (if ((:check constraint) (get sol (:var1 constraint)) (get sol (:var2 constraint)))
+          (recur (rest cs))
+          false))
+      true)))
+
+(defn select-var
+  "Selectionne dans doms le premier element qui n'est pas un singleton"
+  [doms]
+  (some (fn [[x xdom]] (if (> (count xdom) 1)
+                          x
+                          nil)) doms))
+
+(defn find-solution
+      "Cherche une solution dans doms selon les contraintes"
+      [constraints doms]
+      (if (all-singleton? doms)
+        (let [sol (build-solution doms)]
+          (if (solution? constraints sol)
+            sol
+            nil))
+        (let [x (select-var doms)]
+            (loop [xval (get doms x)]
+              (if (seq xval)
+                (let [sol (find-solution constraints (assoc doms x #{(first xval)}))]
+                  (if sol
+                    sol
+                    (recur (rest xval))))
+                nil)))))
