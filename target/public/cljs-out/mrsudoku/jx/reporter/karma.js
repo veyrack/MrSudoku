@@ -42,87 +42,87 @@ return clojure.string.replace.call(null,s,/\n/,["\n",cljs.core.str.cljs$core$IFn
 jx.reporter.karma.remove_last_new_line = (function jx$reporter$karma$remove_last_new_line(s){
 return cljs.core.subs.call(null,s,(0),(cljs.core.count.call(null,s) - (1)));
 });
-jx.reporter.karma.format_fn = (function jx$reporter$karma$format_fn(indentation,p__11264){
-var vec__11265 = p__11264;
-var seq__11266 = cljs.core.seq.call(null,vec__11265);
-var first__11267 = cljs.core.first.call(null,seq__11266);
-var seq__11266__$1 = cljs.core.next.call(null,seq__11266);
-var c = first__11267;
-var q = seq__11266__$1;
-var e = ["\n",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.call(null,cljs.core.str,cljs.core.map.call(null,((function (vec__11265,seq__11266,first__11267,seq__11266__$1,c,q){
-return (function (p1__11263_SHARP_){
+jx.reporter.karma.format_fn = (function jx$reporter$karma$format_fn(indentation,p__14037){
+var vec__14038 = p__14037;
+var seq__14039 = cljs.core.seq.call(null,vec__14038);
+var first__14040 = cljs.core.first.call(null,seq__14039);
+var seq__14039__$1 = cljs.core.next.call(null,seq__14039);
+var c = first__14040;
+var q = seq__14039__$1;
+var e = ["\n",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.call(null,cljs.core.str,cljs.core.map.call(null,((function (vec__14038,seq__14039,first__14040,seq__14039__$1,c,q){
+return (function (p1__14036_SHARP_){
 var sb__4462__auto__ = (new goog.string.StringBuffer());
-var _STAR_print_newline_STAR_11268_11270 = cljs.core._STAR_print_newline_STAR_;
-var _STAR_print_fn_STAR_11269_11271 = cljs.core._STAR_print_fn_STAR_;
+var _STAR_print_newline_STAR_14041_14043 = cljs.core._STAR_print_newline_STAR_;
+var _STAR_print_fn_STAR_14042_14044 = cljs.core._STAR_print_fn_STAR_;
 cljs.core._STAR_print_newline_STAR_ = true;
 
-cljs.core._STAR_print_fn_STAR_ = ((function (_STAR_print_newline_STAR_11268_11270,_STAR_print_fn_STAR_11269_11271,sb__4462__auto__,vec__11265,seq__11266,first__11267,seq__11266__$1,c,q){
+cljs.core._STAR_print_fn_STAR_ = ((function (_STAR_print_newline_STAR_14041_14043,_STAR_print_fn_STAR_14042_14044,sb__4462__auto__,vec__14038,seq__14039,first__14040,seq__14039__$1,c,q){
 return (function (x__4463__auto__){
 return sb__4462__auto__.append(x__4463__auto__);
-});})(_STAR_print_newline_STAR_11268_11270,_STAR_print_fn_STAR_11269_11271,sb__4462__auto__,vec__11265,seq__11266,first__11267,seq__11266__$1,c,q))
+});})(_STAR_print_newline_STAR_14041_14043,_STAR_print_fn_STAR_14042_14044,sb__4462__auto__,vec__14038,seq__14039,first__14040,seq__14039__$1,c,q))
 ;
 
-try{fipp.clojure.pprint.call(null,p1__11263_SHARP_);
-}finally {cljs.core._STAR_print_fn_STAR_ = _STAR_print_fn_STAR_11269_11271;
+try{fipp.clojure.pprint.call(null,p1__14036_SHARP_);
+}finally {cljs.core._STAR_print_fn_STAR_ = _STAR_print_fn_STAR_14042_14044;
 
-cljs.core._STAR_print_newline_STAR_ = _STAR_print_newline_STAR_11268_11270;
+cljs.core._STAR_print_newline_STAR_ = _STAR_print_newline_STAR_14041_14043;
 }
 return [cljs.core.str.cljs$core$IFn$_invoke$arity$1(sb__4462__auto__)].join('');
-});})(vec__11265,seq__11266,first__11267,seq__11266__$1,c,q))
+});})(vec__14038,seq__14039,first__14040,seq__14039__$1,c,q))
 ,q)))].join('');
 return ["(",cljs.core.str.cljs$core$IFn$_invoke$arity$1(c),cljs.core.str.cljs$core$IFn$_invoke$arity$1(jx.reporter.karma.indent.call(null,(indentation + (2)),jx.reporter.karma.remove_last_new_line.call(null,e))),")"].join('');
 });
-jx.reporter.karma.format_diff = (function jx$reporter$karma$format_diff(indentation,assert,p__11272){
-var vec__11273 = p__11272;
-var seq__11274 = cljs.core.seq.call(null,vec__11273);
-var first__11275 = cljs.core.first.call(null,seq__11274);
-var seq__11274__$1 = cljs.core.next.call(null,seq__11274);
-var c = first__11275;
-var first__11275__$1 = cljs.core.first.call(null,seq__11274__$1);
-var seq__11274__$2 = cljs.core.next.call(null,seq__11274__$1);
-var a = first__11275__$1;
-var first__11275__$2 = cljs.core.first.call(null,seq__11274__$2);
-var seq__11274__$3 = cljs.core.next.call(null,seq__11274__$2);
-var b = first__11275__$2;
-var q = seq__11274__$3;
+jx.reporter.karma.format_diff = (function jx$reporter$karma$format_diff(indentation,assert,p__14045){
+var vec__14046 = p__14045;
+var seq__14047 = cljs.core.seq.call(null,vec__14046);
+var first__14048 = cljs.core.first.call(null,seq__14047);
+var seq__14047__$1 = cljs.core.next.call(null,seq__14047);
+var c = first__14048;
+var first__14048__$1 = cljs.core.first.call(null,seq__14047__$1);
+var seq__14047__$2 = cljs.core.next.call(null,seq__14047__$1);
+var a = first__14048__$1;
+var first__14048__$2 = cljs.core.first.call(null,seq__14047__$2);
+var seq__14047__$3 = cljs.core.next.call(null,seq__14047__$2);
+var b = first__14048__$2;
+var q = seq__14047__$3;
 if(((cljs.core._EQ_.call(null,c,new cljs.core.Symbol(null,"=","=",-1501502141,null))) && (cljs.core._EQ_.call(null,cljs.core.count.call(null,assert),(3))) && ((q == null)))){
-var format = ((function (vec__11273,seq__11274,first__11275,seq__11274__$1,c,first__11275__$1,seq__11274__$2,a,first__11275__$2,seq__11274__$3,b,q){
+var format = ((function (vec__14046,seq__14047,first__14048,seq__14047__$1,c,first__14048__$1,seq__14047__$2,a,first__14048__$2,seq__14047__$3,b,q){
 return (function (sign,value){
 return [cljs.core.str.cljs$core$IFn$_invoke$arity$1(sign)," ",cljs.core.str.cljs$core$IFn$_invoke$arity$1((cljs.core.truth_(value)?jx.reporter.karma.indent.call(null,(indentation + (2)),jx.reporter.karma.remove_last_new_line.call(null,(function (){var sb__4462__auto__ = (new goog.string.StringBuffer());
-var _STAR_print_newline_STAR_11279_11281 = cljs.core._STAR_print_newline_STAR_;
-var _STAR_print_fn_STAR_11280_11282 = cljs.core._STAR_print_fn_STAR_;
+var _STAR_print_newline_STAR_14052_14054 = cljs.core._STAR_print_newline_STAR_;
+var _STAR_print_fn_STAR_14053_14055 = cljs.core._STAR_print_fn_STAR_;
 cljs.core._STAR_print_newline_STAR_ = true;
 
-cljs.core._STAR_print_fn_STAR_ = ((function (_STAR_print_newline_STAR_11279_11281,_STAR_print_fn_STAR_11280_11282,sb__4462__auto__,vec__11273,seq__11274,first__11275,seq__11274__$1,c,first__11275__$1,seq__11274__$2,a,first__11275__$2,seq__11274__$3,b,q){
+cljs.core._STAR_print_fn_STAR_ = ((function (_STAR_print_newline_STAR_14052_14054,_STAR_print_fn_STAR_14053_14055,sb__4462__auto__,vec__14046,seq__14047,first__14048,seq__14047__$1,c,first__14048__$1,seq__14047__$2,a,first__14048__$2,seq__14047__$3,b,q){
 return (function (x__4463__auto__){
 return sb__4462__auto__.append(x__4463__auto__);
-});})(_STAR_print_newline_STAR_11279_11281,_STAR_print_fn_STAR_11280_11282,sb__4462__auto__,vec__11273,seq__11274,first__11275,seq__11274__$1,c,first__11275__$1,seq__11274__$2,a,first__11275__$2,seq__11274__$3,b,q))
+});})(_STAR_print_newline_STAR_14052_14054,_STAR_print_fn_STAR_14053_14055,sb__4462__auto__,vec__14046,seq__14047,first__14048,seq__14047__$1,c,first__14048__$1,seq__14047__$2,a,first__14048__$2,seq__14047__$3,b,q))
 ;
 
 try{fipp.clojure.pprint.call(null,value);
-}finally {cljs.core._STAR_print_fn_STAR_ = _STAR_print_fn_STAR_11280_11282;
+}finally {cljs.core._STAR_print_fn_STAR_ = _STAR_print_fn_STAR_14053_14055;
 
-cljs.core._STAR_print_newline_STAR_ = _STAR_print_newline_STAR_11279_11281;
+cljs.core._STAR_print_newline_STAR_ = _STAR_print_newline_STAR_14052_14054;
 }
 return [cljs.core.str.cljs$core$IFn$_invoke$arity$1(sb__4462__auto__)].join('');
 })())):"\n"))].join('');
-});})(vec__11273,seq__11274,first__11275,seq__11274__$1,c,first__11275__$1,seq__11274__$2,a,first__11275__$2,seq__11274__$3,b,q))
+});})(vec__14046,seq__14047,first__14048,seq__14047__$1,c,first__14048__$1,seq__14047__$2,a,first__14048__$2,seq__14047__$3,b,q))
 ;
-var vec__11276 = clojure.data.diff.call(null,a,b);
-var removed = cljs.core.nth.call(null,vec__11276,(0),null);
-var added = cljs.core.nth.call(null,vec__11276,(1),null);
+var vec__14049 = clojure.data.diff.call(null,a,b);
+var removed = cljs.core.nth.call(null,vec__14049,(0),null);
+var added = cljs.core.nth.call(null,vec__14049,(1),null);
 return [cljs.core.str.cljs$core$IFn$_invoke$arity$1(format.call(null,"-",removed)),cljs.core.str.cljs$core$IFn$_invoke$arity$1(format.call(null,["\n",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.apply.call(null,cljs.core.str,cljs.core.repeat.call(null,indentation," "))),"+"].join(''),added))].join('');
 } else {
 return null;
 }
 });
-jx.reporter.karma.format_log = (function jx$reporter$karma$format_log(p__11283){
-var map__11284 = p__11283;
-var map__11284__$1 = ((((!((map__11284 == null)))?(((((map__11284.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__11284.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__11284):map__11284);
-var result = map__11284__$1;
-var expected = cljs.core.get.call(null,map__11284__$1,new cljs.core.Keyword(null,"expected","expected",1583670997));
-var actual = cljs.core.get.call(null,map__11284__$1,new cljs.core.Keyword(null,"actual","actual",107306363));
-var message = cljs.core.get.call(null,map__11284__$1,new cljs.core.Keyword(null,"message","message",-406056002));
+jx.reporter.karma.format_log = (function jx$reporter$karma$format_log(p__14056){
+var map__14057 = p__14056;
+var map__14057__$1 = ((((!((map__14057 == null)))?(((((map__14057.cljs$lang$protocol_mask$partition0$ & (64))) || ((cljs.core.PROTOCOL_SENTINEL === map__14057.cljs$core$ISeq$))))?true:false):false))?cljs.core.apply.call(null,cljs.core.hash_map,map__14057):map__14057);
+var result = map__14057__$1;
+var expected = cljs.core.get.call(null,map__14057__$1,new cljs.core.Keyword(null,"expected","expected",1583670997));
+var actual = cljs.core.get.call(null,map__14057__$1,new cljs.core.Keyword(null,"actual","actual",107306363));
+var message = cljs.core.get.call(null,map__14057__$1,new cljs.core.Keyword(null,"message","message",-406056002));
 var indentation = cljs.core.count.call(null,"expected: ");
 return ["FAIL in   ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.test.testing_vars_str.call(null,result)),"\n",cljs.core.str.cljs$core$IFn$_invoke$arity$1(((((cljs.core.seq_QMARK_.call(null,expected)) && (cljs.core.seq_QMARK_.call(null,actual))))?["expected: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(jx.reporter.karma.format_fn.call(null,indentation,expected)),"\n","  actual: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(jx.reporter.karma.format_fn.call(null,indentation,cljs.core.second.call(null,actual))),"\n",cljs.core.str.cljs$core$IFn$_invoke$arity$1((function (){var temp__5720__auto__ = jx.reporter.karma.format_diff.call(null,indentation,expected,cljs.core.second.call(null,actual));
 if(cljs.core.truth_(temp__5720__auto__)){

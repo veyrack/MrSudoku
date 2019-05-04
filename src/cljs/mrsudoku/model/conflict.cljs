@@ -12,7 +12,6 @@
 (defn values
   "Return the set of values of a vector or grid `cells`."
   [cells]
-
   (into #{} (map (fn [x] (get x :value)) (filter (fn [x] (get x :value)) cells))))
 
 (defn values-except

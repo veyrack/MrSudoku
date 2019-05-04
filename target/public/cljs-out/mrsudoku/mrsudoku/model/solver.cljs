@@ -1,61 +1,9 @@
 (ns mrsudoku.model.solver
-  (:require [mrsudoku.model.grid :as g]))
-
-(def graph {:A #{:F :B :C},
-            :B #{:C}
-            :C #{:D}
-            :D #{:E}
-            :E #{:C}
-            :F #{:H :G}
-            :G #{:H :I}
-            :H #{:F :I}
-            :I #{}})
-
-(def biparti {:x1 #{1 4 43}
-              :x2 #{1}
-              :x3 #{4}})
-(def domaines {:a #{1,3}
-               :b #{1,2,3}})
-
-(def constraint [{:var1 :b
-                  :var2 :a
-                  :check not=}])
+  (:require [mrsudoku.model.grid :as g]
+            [mrsudoku.model.conflict :as c]))
 
 
-(declare all-singleton?)
-(declare build-solution)
-(declare solution?)
-(declare select-var)
-(declare find-solution)
-(declare add-vect)
-(declare transpose)
-(declare adding)
-(declare add-edge)
-(declare augment)
-(declare inv-edges)
-(declare merge-edges)
-(declare sinks)
-(declare dfs)
-(declare dfs-post)
-(declare complete-matching?)
-(declare dfs-stack)
-(declare compute-scc)
-(declare doms-from-sccomp)
-(declare doms-from-scc)
-(declare isolated-values)
-(declare value-known-by)
-(declare add-value)
-(declare vars-of)
-(declare access)
-(declare max-matching)
-(declare add-vertex)
-(declare remove-edge)
-(declare graph-with-matching)
-(declare alldiff)
 (declare solution)
-(declare values)
-(declare completin)
-
 (defn solve
   "Solve the sudoku `grid` by returing a full solved grid,
  or `nil` if the solver fails."
@@ -63,56 +11,10 @@
   (second (solution grid)))
 
 
-(defn all-singleton?
-  "Verifie si toute les clefs du domaine ont une seule valeur"
-  [doms]
-  (every? #(= (count %) 1) (vals doms)))
-
-
-(defn build-solution
-  "Construit une solution en choissisant les premiers elements de chaque domaine"
-  [domaine]
-  (into {} (map (fn [[x xdom]] [x (first xdom)]) domaine)))
-
-
-(defn solution?
-  "Verifie si sol est une solution selon les contraintes"
-  [constraints sol]
-  (loop [cs constraints]
-    (if (seq cs)
-      (let [constraint (first cs)]
-        (if ((:check constraint) (get sol (:var1 constraint)) (get sol (:var2 constraint)))
-          (recur (rest cs))
-          false))
-      true)))
-
-(defn select-var
-  "Selectionne dans doms le premier element qui n'est pas un singleton"
-  [doms]
-  (some (fn [[x xdom]] (if (> (count xdom) 1)
-                          x
-                          nil)) doms))
-
-(defn find-solution
-      "Cherche une solution dans doms selon les contraintes"
-      [constraints doms]
-      (if (all-singleton? doms)
-        (let [sol (build-solution doms)]
-          (if (solution? constraints sol)
-            sol
-            nil))
-        (let [x (select-var doms)]
-            (loop [xval (get doms x)]
-              (if (seq xval)
-                (let [sol (find-solution constraints (assoc doms x #{(first xval)}))]
-                  (if sol
-                    sol
-                    (recur (rest xval))))
-                nil)))))
-
-
+;; Part Graph______________________________________________
+(declare add-vect)
 (defn add-vect
-  "Ajoute au graphe une liaison entre vect(sommet) et la valeur donnée"
+  "Add in the graph a edge in a node."
   [graph vect val]
   (if (contains? graph vect)
     (assoc graph vect (conj (get graph vect) val))
@@ -120,15 +22,18 @@
       (assoc graph vect #{})
       (assoc graph vect #{val}))))
 
+(declare adding)
 (defn adding
-  "Ajoute dans le gaphe une valeur à un ensemble de sommet(vals)"
+  "Add a edge (key) in a set of nodes."
   [graph key vals]
   (loop [res graph,s vals]
     (if (seq s)
       (recur (add-vect res (first s) key) (rest s))
       res)))
-(defn completin
-  "S'il manque des sommets au graphe, la fonction les ajoute"
+
+(declare complete)
+(defn complete
+  "Add the node that miss the graph"
   [res graph]
   (loop [res res, s (keys graph)]
     (if (seq s)
@@ -137,24 +42,20 @@
         (recur (add-vect res (first s) nil) (rest s)))
       res)))
 
+(declare transpose)
 (defn transpose
   "Inverse les liaisons du graphe"
   [graph]
   (loop [keys (keys graph),values (vals graph),res {}]
-;    (println keys)
-;    (println values)
-;    (println res)
     (if (seq keys)
       (if (= #{} (first values))
         (recur (rest keys) (rest values) res)
         (recur (rest keys) (rest values) (adding res (first keys) (first values))))
-      (completin res graph))))
+      (complete res graph))))
 
-;(defn add-edge [graph src dest]
-;  (assoc graph src (conj (get graph src) dest)))
-
+(declare augment)
 (defn augment
-  "Lie une sommet à une valeur unique, ou vole la valeur d'un autre sommet"
+  "Find a solution where the node have a unique value, return a map with value and node."
   [graph src visited match]
   (loop [dests (get graph src),visited visited]
     (if (seq dests)
@@ -168,34 +69,12 @@
           [true,(conj visited (first dests)),(assoc match (first dests) src)]))
      [false,visited,match])))
 
-
+(declare inv-edges)
 (defn inv-edges
-  ""
   [src dests]
   (zipmap dests (repeat #{src})))
 
-(defn merge-edges
-  ""
-  [edge1 edge2]
-  (loop [s edge2,m edge1]
-    (if (seq s)
-      (let [[k,n2] (first s)]
-        (if-let [n1 (get m k)]
-          (recur (rest s) (assoc m k (clojure.set/union n1 n2)))
-          (recur (rest s) (assoc m k n2))))
-      m)))
-
-
-(defn sinks
-  ""
-  [graph verts]
-  (reduce (fn [ngraph vert]
-            (if (contains? ngraph vert)
-              ngraph
-              (assoc ngraph vert #{})))
-          graph
-          verts))
-
+(declare dfs)
 (defn dfs
   "Parcours en Profondeur (prefixe)"
   [graph vert f init visited]
@@ -207,6 +86,7 @@
           (recur (rest verts) res' visited'))
         [res visited]))))
 
+(declare dfs-post)
 (defn dfs-post
   "Parcours en Profondeur (postfixe)"
   [graph vert f init visited]
@@ -218,9 +98,11 @@
           (recur (rest verts) res' visited'))
         [(f res vert) visited]))))
 
+(declare complete-matching?)
 (defn complete-matching? [vars match]
   (= (count vars) (count match)))
 
+(declare dfs-stack)
 (defn dfs-stack
   "Parcours en Profondeur (pile)"
   [graph]
@@ -230,6 +112,7 @@
         (recur (rest verts) stack' visited'))
       stack)))
 
+(declare compute-scc)
 (defn compute-scc
   "Composants fortements connexes du graphe"
   [graph]
@@ -242,15 +125,6 @@
             (recur (rest s) visited' (conj res comp))))
         res))))
 
-
-(def alldiff-doms
-  {:v1 #{1,2,3}
-   :v2 #{1 2 4 5}
-   :v3 #{4 5 6}
-   :v4 #{4 5 6}
-   :v5 #{4 5 6}})
-
-
 (defn doms-from-sccomp [variables compp]
   (if (= (count compp) 1)
      (if (contains? variables (first compp))
@@ -260,12 +134,8 @@
            values (clojure.set/difference compp vars)]
       (zipmap vars (repeat values)))))
 
-;(doms-from-scc (vars-of alldiff-doms) [#{3} #{:v1} #{1} #{:v2} #{2} #{:v5 4 6 :v4 :v3 5}])
-
 (defn doms-from-scc [vars scc]
   (reduce (fn [res comp] (conj res (doms-from-sccomp vars comp))) {} scc))
-
-;(group-by #(contains? variables %) comp)->{true #{:v3 :v4 :v5}   false #{4 5 6}))
 
 (defn isolated-values [variables scc]
   (into #{} (map first (filter #(and (= (count %) 1) (not (variables (first %)))) scc))))
@@ -289,17 +159,22 @@
           (recur (rest s) res))
         res))))
 
+(defn sinks
+  [graph verts]
+  (reduce (fn [ngraph vert]
+            (if (contains? ngraph vert)
+              ngraph
+              (assoc ngraph vert #{})))
+          graph
+          verts))
 
+(declare access)
 (defn access [doms scc]
   (let [sccdoms (doms-from-scc (vars-of doms) scc)
         isolated (isolated-values (vars-of doms) scc)]
-    (reduce (fn [doms' value] (add-value doms' (value-known-by doms value) value)) sccdoms isolated)))
+    (reduce (fn [doms' value] (add-value doms' (value-known-by doms value) value)) (sinks sccdoms (keys doms)) isolated)))
 
-;(vars-of biparti)
-;(doms-from-scc (vars-of alldiff-doms) (compute-scc (graph-with-matching alldiff-doms (max-matching alldiff-doms))))
-;(access biparti (compute-scc (graph-with-matching biparti (max-matching biparti))))
-;(access alldiff-doms (compute-scc (graph-with-matching alldiff-doms (max-matching alldiff-doms))))
-
+(declare max-matching)
 (defn max-matching [doms]
   (reduce (fn [m node] (nth (augment doms node #{} m) 2)) {} (keys doms)))
   ;(loop [res {},keys (keys doms),visited #{}]
@@ -308,7 +183,6 @@
   ;      ;(println rep visited' match)
   ;     (recur match (rest keys) visited'))
   ;  res)))
-
 
 (defn add-vertex
   "Adds an unlinked vertex to the graph.
@@ -337,16 +211,11 @@
               (add-vertex src)
               (add-edge src dest)
               (remove-edge dest src)))
-
           graph match))
 
-
-;(compute-scc (graph-with-matching alldiff-doms (max-matching alldiff-doms)))
-
-;(alldiff alldiff-doms)
-
+(declare alldiff)
 (defn alldiff
-  "simplify the doms for the all-different constraint,return nil if not satisfiable"
+  "Simplify the domaine for the all-different constraint, return nil if not satisfiable"
   [doms]
   (let [match (max-matching doms)]
        (if (complete-matching? doms match)
@@ -355,13 +224,7 @@
            (access doms scc))
          nil)))
 
-;;FONCTIONS RAJOUTEE_________________________________________________________________________________________
-(defn values
-  "Return the set of values of a vector or grid `cells`."
-  [cells]
-  (into #{} (map (fn [x] (get x :value)) (filter (fn [x] (get x :value)) cells))))
-
-
+;;Part Grild-Solver_________________________________________________________________________________________
 (defn which-bloc
   ([b]
    (cond
@@ -381,14 +244,14 @@
      (+ (* bx 3) (inc by)))))
 
 (defn cell-dom [grid coll ligne bloc]
-  "Retourne le domaine de la cellule en eliminant les valeurs de la colonne, ligne et block"
+  "Return a set with the possible number of a cell (without the number of the row, col and block)."
   (if-let [res (g/cell-value (g/cell grid coll ligne))]
     (conj #{} res)
-    (let [d (reduce (fn [res add] (conj res add)) (values (g/row grid ligne)) (values (g/col grid coll))), delete (reduce (fn [res add] (conj res add)) d (values (g/block grid bloc)))]
+    (let [d (reduce (fn [res add] (conj res add)) (c/values (g/row grid ligne)) (c/values (g/col grid coll))), delete (reduce (fn [res add] (conj res add)) d (c/values (g/block grid bloc)))]
      (clojure.set/difference #{1 2 3 4 5 6 7 8 9} delete))))
 
 (defn rows-doms [grid row]
-  "Retourne les domaines de chaque cellule de la ligne (row: nombre de 1 à 9)"
+  "Create a graph with all the domains of the cells in a row (1 to 9)."
     (loop [res {}, col 1]
       (if (< (count res) 9)
         (if (< col 4)
@@ -399,7 +262,7 @@
         res)))
 
 (defn cols-doms [grid col]
-  "Retourne les domaines de chaque cellule de la colonne (col: nombre de 1 à 9)"
+  "Create a graph with all the domains of the cells in a colonne (1 to 9)."
     (loop [res {}, row 1]
      (if (< (count res) 9)
        (if (< row 4)
@@ -409,10 +272,8 @@
            (recur (assoc res (keyword (str "v" row col)) (cell-dom grid col row (which-bloc row col))) (inc row))))
        res)))
 
-
-
 (defn bloc-doms [grid b]
-  "Retourne les domaines de chaque cellule du block (b: nombre de 1 à 9)"
+  "Create a graph with all the domains of the cells in a block (1 to 9)."
   (if-let [bloc (which-bloc b)]
     (loop [res {}, lig (first bloc), col (second bloc), cpt 1]
       (if (< (count res) 9)
@@ -422,17 +283,16 @@
         res))
     nil))
 
-;(bloc-doms sudoku-grid 1)
-;=>{:v21 #{6}, :v11 #{5}, :v32 #{9}, :v31 #{1 2}, :v33 #{8}, :v22 #{7 4 2}, :v13 #{1 4 2}, :v12 #{3}, :v23 #{7 4 2}}
-
 
 (defn grid-dom [grid]
+  "Create a graph with all the domains of the cells"
   (loop [map {},cpt 1]
     (if (< cpt 10)
       (recur (merge map (rows-doms grid cpt)) (inc cpt))
       map)))
 
 (defn solution
+  "Find if the solution have a solution"
   ([grid] (solution grid 1 1))
   ([grid ligne col] (solution grid ligne col (grid-dom grid)))
   ([grid ligne col doms]
@@ -463,5 +323,3 @@
             [false nil]))))
      ;else: on a fini de parcourir la grille
      [true grid])))
-
-;______________________________________________________________________________________________________________________

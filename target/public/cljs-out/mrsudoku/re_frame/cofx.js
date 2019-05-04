@@ -77,8 +77,8 @@ return re_frame.registrar.register_handler.call(null,re_frame.cofx.kind,id,handl
  * to the event handler at call time.
  */
 re_frame.cofx.inject_cofx = (function re_frame$cofx$inject_cofx(var_args){
-var G__12030 = arguments.length;
-switch (G__12030) {
+var G__14591 = arguments.length;
+switch (G__14591) {
 case 1:
 return re_frame.cofx.inject_cofx.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 

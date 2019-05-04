@@ -43,7 +43,7 @@ return nodejs_exit.call(null,(cljs.core.truth_(success_QMARK_)?(0):(1)));
 } else {
 return doo.runner._STAR_exit_fn_STAR_.call(null,success_QMARK_);
 }
-}catch (e11288){var e = e11288;
+}catch (e14065){var e = e14065;
 cljs.core.println.call(null,"WARNING: doo's exit function was not properly set");
 
 return cljs.core.println.call(null,e);
@@ -58,7 +58,7 @@ cljs.core.println.call(null,"WARNING: doo's init function was not set or is not 
 return doo.runner.exit_BANG_.call(null,false);
 } else {
 try{return cljs.core._STAR_main_cli_fn_STAR_.call(null,a);
-}catch (e11289){var e = e11289;
+}catch (e14066){var e = e14066;
 cljs.core.println.call(null);
 
 cljs.core.println.call(null,"ERROR: Exception outside tests:");

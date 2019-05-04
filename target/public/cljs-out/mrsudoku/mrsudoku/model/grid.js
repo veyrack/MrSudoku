@@ -7,8 +7,8 @@ goog.require('mrsudoku.utils');
  * Create a new cell.
  */
 mrsudoku.model.grid.mk_cell = (function mrsudoku$model$grid$mk_cell(var_args){
-var G__8543 = arguments.length;
-switch (G__8543) {
+var G__10260 = arguments.length;
+switch (G__10260) {
 case 0:
 return mrsudoku.model.grid.mk_cell.cljs$core$IFn$_invoke$arity$0();
 
@@ -42,9 +42,9 @@ return new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"st
 mrsudoku.model.grid.mk_cell.cljs$lang$maxFixedArity = 2;
 
 mrsudoku.model.grid.cell_value = (function mrsudoku$model$grid$cell_value(cell){
-var G__8545 = new cljs.core.Keyword(null,"status","status",-1997798413).cljs$core$IFn$_invoke$arity$1(cell);
-var G__8545__$1 = (((G__8545 instanceof cljs.core.Keyword))?G__8545.fqn:null);
-switch (G__8545__$1) {
+var G__10262 = new cljs.core.Keyword(null,"status","status",-1997798413).cljs$core$IFn$_invoke$arity$1(cell);
+var G__10262__$1 = (((G__10262 instanceof cljs.core.Keyword))?G__10262.fqn:null);
+switch (G__10262__$1) {
 case "init":
 case "set":
 case "solved":
@@ -57,7 +57,7 @@ return null;
 
 }
 });
-mrsudoku.model.grid.sudoku_grid = new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null)], null),new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(7)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(1)),mrsudoku.model.grid.mk_cell.call(null,(9)),mrsudoku.model.grid.mk_cell.call(null,(5)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null)], null),new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(6)),mrsudoku.model.grid.mk_cell.call(null)], null)], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null,(8)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(4)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(7)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null)], null),new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(6)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(8)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(3)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(2)),mrsudoku.model.grid.mk_cell.call(null)], null),new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(3)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(1)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(6))], null)], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(6)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null)], null),new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(4)),mrsudoku.model.grid.mk_cell.call(null,(1)),mrsudoku.model.grid.mk_cell.call(null,(9)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(8)),mrsudoku.model.grid.mk_cell.call(null)], null),new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null,(2)),mrsudoku.model.grid.mk_cell.call(null,(8)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(5)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(7)),mrsudoku.model.grid.mk_cell.call(null,(9))], null)], null)], null);
+mrsudoku.model.grid.sudoku_grid = new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null,(5)),mrsudoku.model.grid.mk_cell.call(null,(3)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(6)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(9)),mrsudoku.model.grid.mk_cell.call(null,(8))], null),new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(7)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(1)),mrsudoku.model.grid.mk_cell.call(null,(9)),mrsudoku.model.grid.mk_cell.call(null,(5)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null)], null),new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(6)),mrsudoku.model.grid.mk_cell.call(null)], null)], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null,(8)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(4)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(7)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null)], null),new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(6)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(8)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(3)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(2)),mrsudoku.model.grid.mk_cell.call(null)], null),new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(3)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(1)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(6))], null)], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(6)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null)], null),new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(4)),mrsudoku.model.grid.mk_cell.call(null,(1)),mrsudoku.model.grid.mk_cell.call(null,(9)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(8)),mrsudoku.model.grid.mk_cell.call(null)], null),new cljs.core.PersistentVector(null, 9, 5, cljs.core.PersistentVector.EMPTY_NODE, [mrsudoku.model.grid.mk_cell.call(null,(2)),mrsudoku.model.grid.mk_cell.call(null,(8)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(5)),mrsudoku.model.grid.mk_cell.call(null),mrsudoku.model.grid.mk_cell.call(null,(7)),mrsudoku.model.grid.mk_cell.call(null,(9))], null)], null)], null);
 /**
  * Get the cell at coordinates `(cx,cy)`
  * with `cx` the column number and `cy` the row number.
@@ -109,21 +109,21 @@ return cell;
 );
 });
 mrsudoku.model.grid.cell__GT_str = (function mrsudoku$model$grid$cell__GT_str(cell){
-var pred__8547 = cljs.core._EQ_;
-var expr__8548 = new cljs.core.Keyword(null,"status","status",-1997798413).cljs$core$IFn$_invoke$arity$1(cell);
-if(cljs.core.truth_(pred__8547.call(null,new cljs.core.Keyword(null,"init","init",-1875481434),expr__8548))){
+var pred__10264 = cljs.core._EQ_;
+var expr__10265 = new cljs.core.Keyword(null,"status","status",-1997798413).cljs$core$IFn$_invoke$arity$1(cell);
+if(cljs.core.truth_(pred__10264.call(null,new cljs.core.Keyword(null,"init","init",-1875481434),expr__10265))){
 return [" ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"value","value",305978217).cljs$core$IFn$_invoke$arity$1(cell))," "].join('');
 } else {
-if(cljs.core.truth_(pred__8547.call(null,new cljs.core.Keyword(null,"empty","empty",767870958),expr__8548))){
+if(cljs.core.truth_(pred__10264.call(null,new cljs.core.Keyword(null,"empty","empty",767870958),expr__10265))){
 return " . ";
 } else {
-if(cljs.core.truth_(pred__8547.call(null,new cljs.core.Keyword(null,"set","set",304602554),expr__8548))){
+if(cljs.core.truth_(pred__10264.call(null,new cljs.core.Keyword(null,"set","set",304602554),expr__10265))){
 return ["[",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"value","value",305978217).cljs$core$IFn$_invoke$arity$1(cell)),"]"].join('');
 } else {
-if(cljs.core.truth_(pred__8547.call(null,new cljs.core.Keyword(null,"conflict","conflict",1978796605),expr__8548))){
+if(cljs.core.truth_(pred__10264.call(null,new cljs.core.Keyword(null,"conflict","conflict",1978796605),expr__10265))){
 return ["!",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"value","value",305978217).cljs$core$IFn$_invoke$arity$1(cell)),"!"].join('');
 } else {
-throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(expr__8548)].join('')));
+throw (new Error(["No matching clause: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(expr__10265)].join('')));
 }
 }
 }
@@ -159,7 +159,7 @@ while(true){
 if(cljs.core._EQ_.call(null,yoffset,(3))){
 return acc;
 } else {
-var vec__8550 = (function (){var xoffset = (0);
+var vec__10267 = (function (){var xoffset = (0);
 var index__$1 = index;
 var cells__$1 = cells;
 var acc__$1 = acc;
@@ -167,30 +167,30 @@ while(true){
 if(cljs.core._EQ_.call(null,xoffset,(3))){
 return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [acc__$1,cells__$1,index__$1], null);
 } else {
-var G__8553 = (xoffset + (1));
-var G__8554 = (index__$1 + (1));
-var G__8555 = cljs.core.rest.call(null,cells__$1);
-var G__8556 = f.call(null,acc__$1,index__$1,((bx + xoffset) + (1)),((by + yoffset) + (1)),cljs.core.first.call(null,cells__$1));
-xoffset = G__8553;
-index__$1 = G__8554;
-cells__$1 = G__8555;
-acc__$1 = G__8556;
+var G__10270 = (xoffset + (1));
+var G__10271 = (index__$1 + (1));
+var G__10272 = cljs.core.rest.call(null,cells__$1);
+var G__10273 = f.call(null,acc__$1,index__$1,((bx + xoffset) + (1)),((by + yoffset) + (1)),cljs.core.first.call(null,cells__$1));
+xoffset = G__10270;
+index__$1 = G__10271;
+cells__$1 = G__10272;
+acc__$1 = G__10273;
 continue;
 }
 break;
 }
 })();
-var nacc = cljs.core.nth.call(null,vec__8550,(0),null);
-var ncells = cljs.core.nth.call(null,vec__8550,(1),null);
-var nindex = cljs.core.nth.call(null,vec__8550,(2),null);
-var G__8557 = (yoffset + (1));
-var G__8558 = nindex;
-var G__8559 = ncells;
-var G__8560 = nacc;
-yoffset = G__8557;
-index = G__8558;
-cells = G__8559;
-acc = G__8560;
+var nacc = cljs.core.nth.call(null,vec__10267,(0),null);
+var ncells = cljs.core.nth.call(null,vec__10267,(1),null);
+var nindex = cljs.core.nth.call(null,vec__10267,(2),null);
+var G__10274 = (yoffset + (1));
+var G__10275 = nindex;
+var G__10276 = ncells;
+var G__10277 = nacc;
+yoffset = G__10274;
+index = G__10275;
+cells = G__10276;
+acc = G__10277;
 continue;
 }
 break;
@@ -240,25 +240,25 @@ return clojure.string.join.call(null," ",cljs.core.map.call(null,mrsudoku.model.
  * Fetch all the rows of a sudoku `grid`.
  */
 mrsudoku.model.grid.rows = (function mrsudoku$model$grid$rows(grid){
-var iter__4324__auto__ = (function mrsudoku$model$grid$rows_$_iter__8561(s__8562){
+var iter__4324__auto__ = (function mrsudoku$model$grid$rows_$_iter__10278(s__10279){
 return (new cljs.core.LazySeq(null,(function (){
-var s__8562__$1 = s__8562;
+var s__10279__$1 = s__10279;
 while(true){
-var temp__5720__auto__ = cljs.core.seq.call(null,s__8562__$1);
+var temp__5720__auto__ = cljs.core.seq.call(null,s__10279__$1);
 if(temp__5720__auto__){
-var s__8562__$2 = temp__5720__auto__;
-if(cljs.core.chunked_seq_QMARK_.call(null,s__8562__$2)){
-var c__4322__auto__ = cljs.core.chunk_first.call(null,s__8562__$2);
+var s__10279__$2 = temp__5720__auto__;
+if(cljs.core.chunked_seq_QMARK_.call(null,s__10279__$2)){
+var c__4322__auto__ = cljs.core.chunk_first.call(null,s__10279__$2);
 var size__4323__auto__ = cljs.core.count.call(null,c__4322__auto__);
-var b__8564 = cljs.core.chunk_buffer.call(null,size__4323__auto__);
-if((function (){var i__8563 = (0);
+var b__10281 = cljs.core.chunk_buffer.call(null,size__4323__auto__);
+if((function (){var i__10280 = (0);
 while(true){
-if((i__8563 < size__4323__auto__)){
-var i = cljs.core._nth.call(null,c__4322__auto__,i__8563);
-cljs.core.chunk_append.call(null,b__8564,mrsudoku.model.grid.row.call(null,grid,i));
+if((i__10280 < size__4323__auto__)){
+var i = cljs.core._nth.call(null,c__4322__auto__,i__10280);
+cljs.core.chunk_append.call(null,b__10281,mrsudoku.model.grid.row.call(null,grid,i));
 
-var G__8565 = (i__8563 + (1));
-i__8563 = G__8565;
+var G__10282 = (i__10280 + (1));
+i__10280 = G__10282;
 continue;
 } else {
 return true;
@@ -266,13 +266,13 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__8564),mrsudoku$model$grid$rows_$_iter__8561.call(null,cljs.core.chunk_rest.call(null,s__8562__$2)));
+return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__10281),mrsudoku$model$grid$rows_$_iter__10278.call(null,cljs.core.chunk_rest.call(null,s__10279__$2)));
 } else {
-return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__8564),null);
+return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__10281),null);
 }
 } else {
-var i = cljs.core.first.call(null,s__8562__$2);
-return cljs.core.cons.call(null,mrsudoku.model.grid.row.call(null,grid,i),mrsudoku$model$grid$rows_$_iter__8561.call(null,cljs.core.rest.call(null,s__8562__$2)));
+var i = cljs.core.first.call(null,s__10279__$2);
+return cljs.core.cons.call(null,mrsudoku.model.grid.row.call(null,grid,i),mrsudoku$model$grid$rows_$_iter__10278.call(null,cljs.core.rest.call(null,s__10279__$2)));
 }
 } else {
 return null;
@@ -295,25 +295,25 @@ if(((((1) <= c)) && ((c <= (9))))){
 throw (new Error("Assert failed: (<= 1 c 9)"));
 }
 
-return cljs.core.into.call(null,cljs.core.PersistentVector.EMPTY,(function (){var iter__4324__auto__ = (function mrsudoku$model$grid$col_$_iter__8566(s__8567){
+return cljs.core.into.call(null,cljs.core.PersistentVector.EMPTY,(function (){var iter__4324__auto__ = (function mrsudoku$model$grid$col_$_iter__10283(s__10284){
 return (new cljs.core.LazySeq(null,(function (){
-var s__8567__$1 = s__8567;
+var s__10284__$1 = s__10284;
 while(true){
-var temp__5720__auto__ = cljs.core.seq.call(null,s__8567__$1);
+var temp__5720__auto__ = cljs.core.seq.call(null,s__10284__$1);
 if(temp__5720__auto__){
-var s__8567__$2 = temp__5720__auto__;
-if(cljs.core.chunked_seq_QMARK_.call(null,s__8567__$2)){
-var c__4322__auto__ = cljs.core.chunk_first.call(null,s__8567__$2);
+var s__10284__$2 = temp__5720__auto__;
+if(cljs.core.chunked_seq_QMARK_.call(null,s__10284__$2)){
+var c__4322__auto__ = cljs.core.chunk_first.call(null,s__10284__$2);
 var size__4323__auto__ = cljs.core.count.call(null,c__4322__auto__);
-var b__8569 = cljs.core.chunk_buffer.call(null,size__4323__auto__);
-if((function (){var i__8568 = (0);
+var b__10286 = cljs.core.chunk_buffer.call(null,size__4323__auto__);
+if((function (){var i__10285 = (0);
 while(true){
-if((i__8568 < size__4323__auto__)){
-var cy = cljs.core._nth.call(null,c__4322__auto__,i__8568);
-cljs.core.chunk_append.call(null,b__8569,mrsudoku.model.grid.cell.call(null,grid,c,cy));
+if((i__10285 < size__4323__auto__)){
+var cy = cljs.core._nth.call(null,c__4322__auto__,i__10285);
+cljs.core.chunk_append.call(null,b__10286,mrsudoku.model.grid.cell.call(null,grid,c,cy));
 
-var G__8570 = (i__8568 + (1));
-i__8568 = G__8570;
+var G__10287 = (i__10285 + (1));
+i__10285 = G__10287;
 continue;
 } else {
 return true;
@@ -321,13 +321,13 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__8569),mrsudoku$model$grid$col_$_iter__8566.call(null,cljs.core.chunk_rest.call(null,s__8567__$2)));
+return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__10286),mrsudoku$model$grid$col_$_iter__10283.call(null,cljs.core.chunk_rest.call(null,s__10284__$2)));
 } else {
-return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__8569),null);
+return cljs.core.chunk_cons.call(null,cljs.core.chunk.call(null,b__10286),null);
 }
 } else {
-var cy = cljs.core.first.call(null,s__8567__$2);
-return cljs.core.cons.call(null,mrsudoku.model.grid.cell.call(null,grid,c,cy),mrsudoku$model$grid$col_$_iter__8566.call(null,cljs.core.rest.call(null,s__8567__$2)));
+var cy = cljs.core.first.call(null,s__10284__$2);
+return cljs.core.cons.call(null,mrsudoku.model.grid.cell.call(null,grid,c,cy),mrsudoku$model$grid$col_$_iter__10283.call(null,cljs.core.rest.call(null,s__10284__$2)));
 }
 } else {
 return null;
@@ -357,19 +357,19 @@ while(true){
 if(cljs.core._EQ_.call(null,cx,(10))){
 return acc__$1;
 } else {
-var G__8571 = (cx + (1));
-var G__8572 = f.call(null,acc__$1,cx,cy,mrsudoku.model.grid.cell.call(null,grid,cx,cy));
-cx = G__8571;
-acc__$1 = G__8572;
+var G__10288 = (cx + (1));
+var G__10289 = f.call(null,acc__$1,cx,cy,mrsudoku.model.grid.cell.call(null,grid,cx,cy));
+cx = G__10288;
+acc__$1 = G__10289;
 continue;
 }
 break;
 }
 })();
-var G__8573 = (cy + (1));
-var G__8574 = nacc;
-cy = G__8573;
-acc = G__8574;
+var G__10290 = (cy + (1));
+var G__10291 = nacc;
+cy = G__10290;
+acc = G__10291;
 continue;
 }
 break;
