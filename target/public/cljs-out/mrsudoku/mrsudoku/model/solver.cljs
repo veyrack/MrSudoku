@@ -3,14 +3,6 @@
             [mrsudoku.model.conflict :as c]))
 
 
-(declare solution)
-(defn solve
-  "Solve the sudoku `grid` by returing a full solved grid,
- or `nil` if the solver fails."
-  [grid]
-  (second (solution grid)))
-
-
 ;; Part Graph______________________________________________
 (declare add-vect)
 (defn add-vect
@@ -125,6 +117,7 @@
             (recur (rest s) visited' (conj res comp))))
         res))))
 
+(declare doms-from-sccomp)
 (defn doms-from-sccomp [variables compp]
   (if (= (count compp) 1)
      (if (contains? variables (first compp))
@@ -134,22 +127,27 @@
            values (clojure.set/difference compp vars)]
       (zipmap vars (repeat values)))))
 
+(declare doms-from-scc)
 (defn doms-from-scc [vars scc]
   (reduce (fn [res comp] (conj res (doms-from-sccomp vars comp))) {} scc))
 
+(declare isolated-values)
 (defn isolated-values [variables scc]
   (into #{} (map first (filter #(and (= (count %) 1) (not (variables (first %)))) scc))))
 
+(declare value-known-by)
 (defn value-known-by [doms value]
   (reduce (fn [res [v values]]
            (if (contains? values value)
              (conj res v)
              res)) #{} doms))
 
+(declare add-value)
 (defn add-value [doms vs value]
   (into doms (map (fn [var] [var,(conj (get doms var) value)]) vs)))
                ;[var, (update doms var #(conj % value))]
 
+(declare vars-of)
 (defn vars-of [doms]
   (loop [s doms,res #{}]
     (let [[x xdom] (first s)]
@@ -159,6 +157,7 @@
           (recur (rest s) res))
         res))))
 
+(declare sinks)
 (defn sinks
   [graph verts]
   (reduce (fn [ngraph vert]
@@ -184,6 +183,7 @@
   ;     (recur match (rest keys) visited'))
   ;  res)))
 
+(declare add-vertex)
 (defn add-vertex
   "Adds an unlinked vertex to the graph.
   Does nothing if already present"
@@ -192,11 +192,13 @@
     vert
     (assoc graph vert #{})))
 
+(declare add-edge)
 (defn add-edge
   "Adds the a->b edge to the supplied graph"
   [graph a b]
   (update graph a #(conj (or % #{}) b)))
 
+(declare remove-edge)
 (defn remove-edge
  "Removes the a->b edge"
  [g a b]
@@ -204,6 +206,7 @@
   (dissoc g a)
   (update g a #(disj % b))))
 
+(declare graph-with-matching)
 (defn graph-with-matching [graph match]
   (reduce (fn [mgraph [src dest]]
             (-> mgraph
@@ -225,6 +228,7 @@
          nil)))
 
 ;;Part Grild-Solver_________________________________________________________________________________________
+(declare which-bloc)
 (defn which-bloc
   ([b]
    (cond
@@ -243,6 +247,7 @@
          by (quot (- col 1) 3)]
      (+ (* bx 3) (inc by)))))
 
+(declare cell-dom)
 (defn cell-dom [grid coll ligne bloc]
   "Return a set with the possible number of a cell (without the number of the row, col and block)."
   (if-let [res (g/cell-value (g/cell grid coll ligne))]
@@ -250,6 +255,7 @@
     (let [d (reduce (fn [res add] (conj res add)) (c/values (g/row grid ligne)) (c/values (g/col grid coll))), delete (reduce (fn [res add] (conj res add)) d (c/values (g/block grid bloc)))]
      (clojure.set/difference #{1 2 3 4 5 6 7 8 9} delete))))
 
+(declare rows-doms)
 (defn rows-doms [grid row]
   "Create a graph with all the domains of the cells in a row (1 to 9)."
     (loop [res {}, col 1]
@@ -261,6 +267,7 @@
             (recur (assoc res (keyword (str "v" row col)) (cell-dom grid col row (which-bloc row col))) (inc col))))
         res)))
 
+(declare cols-doms)
 (defn cols-doms [grid col]
   "Create a graph with all the domains of the cells in a colonne (1 to 9)."
     (loop [res {}, row 1]
@@ -272,6 +279,7 @@
            (recur (assoc res (keyword (str "v" row col)) (cell-dom grid col row (which-bloc row col))) (inc row))))
        res)))
 
+(declare bloc-doms)
 (defn bloc-doms [grid b]
   "Create a graph with all the domains of the cells in a block (1 to 9)."
   (if-let [bloc (which-bloc b)]
@@ -283,7 +291,7 @@
         res))
     nil))
 
-
+(declare grid-dom)
 (defn grid-dom [grid]
   "Create a graph with all the domains of the cells"
   (loop [map {},cpt 1]
@@ -291,6 +299,8 @@
       (recur (merge map (rows-doms grid cpt)) (inc cpt))
       map)))
 
+
+(declare solution)
 (defn solution
   "Find if the solution have a solution"
   ([grid] (solution grid 1 1))
@@ -323,3 +333,10 @@
             [false nil]))))
      ;else: on a fini de parcourir la grille
      [true grid])))
+
+;________________________________________________________
+(defn solve
+  "Solve the sudoku `grid` by returing a full solved grid,
+ or `nil` if the solver fails."
+  [grid]
+  (second (solution grid)))

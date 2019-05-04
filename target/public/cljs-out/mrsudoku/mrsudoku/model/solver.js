@@ -4,13 +4,6 @@ goog.require('cljs.core');
 goog.require('mrsudoku.model.grid');
 goog.require('mrsudoku.model.conflict');
 /**
- * Solve the sudoku `grid` by returing a full solved grid,
- *  or `nil` if the solver fails.
- */
-mrsudoku.model.solver.solve = (function mrsudoku$model$solver$solve(grid){
-return cljs.core.second.call(null,mrsudoku.model.solver.solution.call(null,grid));
-});
-/**
  * Add in the graph a edge in a node.
  */
 mrsudoku.model.solver.add_vect = (function mrsudoku$model$solver$add_vect(graph,vect,val){
@@ -727,5 +720,12 @@ return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMP
 
 mrsudoku.model.solver.solution.cljs$lang$maxFixedArity = 4;
 
+/**
+ * Solve the sudoku `grid` by returing a full solved grid,
+ *  or `nil` if the solver fails.
+ */
+mrsudoku.model.solver.solve = (function mrsudoku$model$solver$solve(grid){
+return cljs.core.second.call(null,mrsudoku.model.solver.solution.call(null,grid));
+});
 
 //# sourceMappingURL=solver.js.map
